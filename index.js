@@ -19,6 +19,13 @@ var restify = require('restify')
   console.log('Resources:')
   console.log(' /products')
   console.log(' /products/:id')  
+  console.log(' /products/screenSize/:size')  
+  console.log(' /products/color/:color')  
+  console.log(' /products/memory/:memory')  
+  console.log(' /products/:id/accessories')  
+  console.log(' /products/:id/accessories/:accessoryId')  
+  console.log(' /products/:id/tariffs')  
+  console.log(' /products/:id/tariffs/:tariffId')  
 })
 
 server
@@ -41,7 +48,7 @@ server.get('/products', function (req, res, next) {
   })
   
   // Get a single product by their product id
-  server.get('/product/:id', function (req, res, next) {
+  server.get('/products/:id', function (req, res, next) {
   
     // Find a single product by their id within save
     productsSave.findOne({ _id: req.params.id }, function (error, product) {
@@ -60,7 +67,7 @@ server.get('/products', function (req, res, next) {
   })
   
   // Create a new product
-  server.post('/product', function (req, res, next) {
+  server.post('/products', function (req, res, next) {
   
     // Make sure name is defined
     if (req.params.name === undefined ) {
@@ -103,7 +110,7 @@ server.get('/products', function (req, res, next) {
   })
   
   // Update a product by their id
-  server.put('/product/:id', function (req, res, next) {
+  server.put('/products/:id', function (req, res, next) {
   
     // Make sure name is defined
     if (req.params.name === undefined ) {
@@ -147,7 +154,7 @@ server.get('/products', function (req, res, next) {
   })
   
   // Delete product with the given id
-  server.del('/product/:id', function (req, res, next) {
+  server.del('/products/:id', function (req, res, next) {
   
     // Delete the product with the persistence engine
   productsSave.delete(req.params.id, function (error, product) {
@@ -175,14 +182,14 @@ server.get('/products', function (req, res, next) {
     })
 
     // Get all accessories of particular product
-server.get('/product/:id/accessories', function (req, res, next) {
+server.get('/products/:id/accessories', function (req, res, next) {
   productAcessoriesSave.find({ product_id: req.params.id }, function (error, productAcessories) {
   res.send(productAcessories)
  })
 })
 
   //Create an accessory for a product
-server.post('/product/:id/accessory', function (req, res, next) {
+server.post('/products/:id/accessories', function (req, res, next) {
   
     if (req.params.name === undefined ) {
       return next(new restify.InvalidArgumentError('name must be supplied'))
@@ -202,7 +209,7 @@ server.post('/product/:id/accessory', function (req, res, next) {
   
   
   //Delete an accessory of the product
-  server.del('/product/:id/accessory/:accesoryId', function (req, res, next) {
+  server.del('/products/:id/accessories/:accesoryId', function (req, res, next) {
     
       // Delete the product with the persistence engine
       productAcessoriesSave.delete(req.params.accesoryId, function (error, product) {
@@ -218,7 +225,7 @@ server.post('/product/:id/accessory', function (req, res, next) {
 
     
   // Update a accessory of a product by their id
-  server.put('/product/:id/accessory/:accessoryId', function (req, res, next) {
+  server.put('/products/:id/accessories/:accessoryId', function (req, res, next) {
     
       // Make sure name is defined
       if (req.params.name === undefined ) {
@@ -244,14 +251,14 @@ server.post('/product/:id/accessory', function (req, res, next) {
     })
 
     // Get all tariffs of particular product
-server.get('/product/:id/tariffs', function (req, res, next) {
+server.get('/products/:id/tariffs', function (req, res, next) {
   productTariffsSave.find({ product_id: req.params.id }, function (error, productTariffs) {
   res.send(productTariffs)
  })
 })
 
   //Create an tariff for a product
-server.post('/product/:id/tariff', function (req, res, next) {
+server.post('/products/:id/tariffs', function (req, res, next) {
   
     if (req.params.name === undefined ) {
       return next(new restify.InvalidArgumentError('name must be supplied'))
@@ -271,7 +278,7 @@ server.post('/product/:id/tariff', function (req, res, next) {
   
   
   //Delete an tariff of the product
-  server.del('/product/:id/tariff/:tariffId', function (req, res, next) {
+  server.del('/products/:id/tariffs/:tariffId', function (req, res, next) {
     
       // Delete the product with the persistence engine
       productTariffsSave.delete(req.params.tariffId, function (error, product) {
@@ -287,7 +294,7 @@ server.post('/product/:id/tariff', function (req, res, next) {
 
     
   // Update a tariff of a product by their id
-  server.put('/product/:id/tariff/:tariffId', function (req, res, next) {
+  server.put('/products/:id/tariffs/:tariffId', function (req, res, next) {
     
       // Make sure name is defined
       if (req.params.name === undefined ) {

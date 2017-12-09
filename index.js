@@ -314,21 +314,21 @@ server.post('/product/:id/tariff', function (req, res, next) {
 
      // Get all product using filter size
 server.get('/products/screenSize/:size', function (req, res, next) {
-  productsSave.find({ screenSize: req.params.size }, function (error, productTariffs) {
-  res.send(productTariffs)
+  productsSave.find({ screenSize: req.params.size }, function (error, product) {
+  res.send(product)
  })
 })
 
 // Get all product using filter color
 server.get('/products/color/:color', function (req, res, next) {
-  productsSave.find({ color: req.params.color }, function (error, productTariffs) {
-  res.send(productTariffs)
+  productsSave.find({ color: req.params.color }, function (error, product) {
+  res.send(product)
  })
 })
 
 // Get all product using filter memory
 server.get('/products/memory/:memory', function (req, res, next) {
-  productsSave.find({ color: req.params.memorys }, function (error, productTariffs) {
-  res.send(productTariffs)
+  productsSave.find({ color: req.params.memorys }, function (error, product) {
+  res.send(product)
  })
 })

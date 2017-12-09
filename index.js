@@ -270,7 +270,7 @@ server.post('/product/:id/tariff', function (req, res, next) {
   })
   
   
-  //Delete an accessory of the product
+  //Delete an tariff of the product
   server.del('/product/:id/tariff/:tariffId', function (req, res, next) {
     
       // Delete the product with the persistence engine
@@ -286,7 +286,7 @@ server.post('/product/:id/tariff', function (req, res, next) {
     })
 
     
-  // Update a accessory of a product by their id
+  // Update a tariff of a product by their id
   server.put('/product/:id/tariff/:tariffId', function (req, res, next) {
     
       // Make sure name is defined
@@ -312,4 +312,23 @@ server.post('/product/:id/tariff', function (req, res, next) {
       })
     })
 
-    
+     // Get all product using filter size
+server.get('/products/screenSize/:size', function (req, res, next) {
+  productsSave.find({ screenSize: req.params.size }, function (error, productTariffs) {
+  res.send(productTariffs)
+ })
+})
+
+// Get all product using filter color
+server.get('/products/color/:color', function (req, res, next) {
+  productsSave.find({ color: req.params.color }, function (error, productTariffs) {
+  res.send(productTariffs)
+ })
+})
+
+// Get all product using filter memory
+server.get('/products/memory/:memory', function (req, res, next) {
+  productsSave.find({ color: req.params.memorys }, function (error, productTariffs) {
+  res.send(productTariffs)
+ })
+})

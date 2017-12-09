@@ -1,0 +1,32 @@
+{
+  "name": "online-mobile-store",
+  "version": "1.0.0",
+  "description": "Creating a Mobile Online Store where users can view and buy the product and admin can add, delete or modify products",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhinavs12/enterprise-project.git"
+  },
+  "dependencies": {
+    "restify": "4.1.1",
+"save": "2.3.0"
+
+},
+  "keywords": [
+    "mobile",
+    "store",
+    "online",
+    "enterprise",
+    "project",
+    "node.js"
+  ],
+  "author": "Abhinav Sharma and Mansi Gupta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhinavs12/enterprise-project/issues"
+  },
+  "homepage": "https://github.com/abhinavs12/enterprise-project#readme"
+}

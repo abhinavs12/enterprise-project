@@ -1,6 +1,6 @@
 
 var SERVER_NAME = 'mobile-online-store'
-var PORT = 4005;
+var PORT = 4000;
 var HOST = '127.0.0.1';
 
 
@@ -170,16 +170,16 @@ server.get('/products', function (req, res, next) {
   
   //Delete all products
   server.del('/products', function(req,res,next){
-    
-    productsSave.delete(any,function(error,products){
-    
-    if(error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
-    
-    res.send()
-    
+    productsSave.deleteMany({},function(error,products){
+      if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+      
+        res.send('All Records Deleted')
+
     })
+  
+  })
     
-    })
+    
 
     // Get all accessories of particular product
 server.get('/products/:id/accessories', function (req, res, next) {
@@ -191,14 +191,24 @@ server.get('/products/:id/accessories', function (req, res, next) {
   //Create an accessory for a product
 server.post('/products/:id/accessories', function (req, res, next) {
   
+    if (req.params.cost === undefined ) {
+      return next(new restify.InvalidArgumentError('cost must be supplied'))
+    }
+
     if (req.params.name === undefined ) {
       return next(new restify.InvalidArgumentError('name must be supplied'))
     }
-      
+
+    if (req.params.brand === undefined ) {
+      return next(new restify.InvalidArgumentError('brand must be supplied'))
+    }
     
     var newProductAccessory = {
-      product_id: req.params.id, 
-      name: req.params.name
+      product_id: req.params.id,
+      cost: req.params.cost, 
+      name: req.params.name,
+      brand: req.params.brand
+
     }
   
     productAcessoriesSave.create( newProductAccessory, function (error, product) {
@@ -228,15 +238,24 @@ server.post('/products/:id/accessories', function (req, res, next) {
   server.put('/products/:id/accessories/:accessoryId', function (req, res, next) {
     
       // Make sure name is defined
+      if (req.params.cost === undefined ) {
+        return next(new restify.InvalidArgumentError('cost must be supplied'))
+      }
+  
       if (req.params.name === undefined ) {
-        // If there are any errors, pass them to next in the correct format
-        return next(new restify.InvalidArgumentError('enter name.'))
+        return next(new restify.InvalidArgumentError('name must be supplied'))
+      }
+  
+      if (req.params.brand === undefined ) {
+        return next(new restify.InvalidArgumentError('brand must be supplied'))
       }
             
       var newProductAccessory = {
         _id: req.params.accessoryId,
         product_id: req.params.id, 
-        name: req.params.name
+        cost: req.params.cost, 
+        name: req.params.name,
+        brand: req.params.brand
       }
       
       // Update the product with the persistence engine
@@ -260,14 +279,39 @@ server.get('/products/:id/tariffs', function (req, res, next) {
   //Create an tariff for a product
 server.post('/products/:id/tariffs', function (req, res, next) {
   
+    if (req.params.upfrontCost === undefined ) {
+      return next(new restify.InvalidArgumentError('upfrontCost must be supplied'))
+    }
+
     if (req.params.name === undefined ) {
       return next(new restify.InvalidArgumentError('name must be supplied'))
     }
+
+    if (req.params.data === undefined ) {
+      return next(new restify.InvalidArgumentError('data must be supplied'))
+    }
+    if (req.params.monthly === undefined ) {
+      return next(new restify.InvalidArgumentError('monthly must be supplied'))
+    }
       
+    if (req.params.minutes === undefined ) {
+      return next(new restify.InvalidArgumentError('minutes must be supplied'))
+    }
+
+    if (req.params.texts === undefined ) {
+      return next(new restify.InvalidArgumentError('texts must be supplied'))
+    }
     
     var newProductTariff = {
       product_id: req.params.id, 
-      name: req.params.name
+      upfrontCost: req.params.upfrontCost, 
+      name: req.params.name,
+      data: req.params.data,
+      monthly: req.params.monthly,
+      minutes: req.params.minutes,
+      texts:req.params.texts
+      
+      
     }
   
     productTariffsSave.create( newProductTariff, function (error, product) {
@@ -297,15 +341,40 @@ server.post('/products/:id/tariffs', function (req, res, next) {
   server.put('/products/:id/tariffs/:tariffId', function (req, res, next) {
     
       // Make sure name is defined
+      
+      if (req.params.upfrontCost === undefined ) {
+        return next(new restify.InvalidArgumentError('upfrontCost must be supplied'))
+      }
+  
       if (req.params.name === undefined ) {
-        // If there are any errors, pass them to next in the correct format
-        return next(new restify.InvalidArgumentError('enter name.'))
+        return next(new restify.InvalidArgumentError('name must be supplied'))
+      }
+  
+      if (req.params.data === undefined ) {
+        return next(new restify.InvalidArgumentError('data must be supplied'))
+      }
+      if (req.params.monthly === undefined ) {
+        return next(new restify.InvalidArgumentError('monthly must be supplied'))
+      }
+        
+      if (req.params.minutes === undefined ) {
+        return next(new restify.InvalidArgumentError('minutes must be supplied'))
+      }
+  
+      if (req.params.texts === undefined ) {
+        return next(new restify.InvalidArgumentError('texts must be supplied'))
       }
             
       var newProductTariff = {
         _id: req.params.tariffId,
         product_id: req.params.id, 
-        name: req.params.name
+        upfrontCost: req.params.upfrontCost, 
+        name: req.params.name,
+        data: req.params.data,
+        monthly: req.params.monthly,
+        minutes: req.params.minutes,
+        texts:req.params.texts
+  
       }
       
       // Update the product with the persistence engine

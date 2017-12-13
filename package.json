@@ -4,7 +4,7 @@
   "description": "Creating a Mobile Online Store where users can view and buy the product and admin can add, delete or modify products",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

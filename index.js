@@ -172,8 +172,18 @@ server.get('/products', function (req, res, next) {
   server.del('/products', function(req,res,next){
     productsSave.deleteMany({},function(error,products){
       if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+
+      productTariffsSave.deleteMany({},function(error,products){
+        if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+        res.send('All Tariffs of Products Deleted')
+      })  
+
+      productAcessoriesSave.deleteMany({},function(error,products){
+        if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+        res.send('All Accessories of Products Deleted')
+      })  
       
-        res.send('All Records Deleted')
+        res.send('All Products Deleted')
 
     })
   

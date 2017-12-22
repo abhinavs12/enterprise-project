@@ -135,6 +135,7 @@ server.get('/products', function (req, res, next) {
     
     var newProduct = {
       _id: req.params.id,
+      name: req.params.name,
       brand: req.params.brand,
       memory: req.params.memory,
       color: req.params.color,

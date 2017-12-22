@@ -424,3 +424,9 @@ server.get('/products/brand/:brand', function (req, res, next) {
   res.send(product)
  })
 })
+
+server.get('/products/name/:name', function (req, res, next) {
+  productsSave.find({ name: req.params.name}, function (error, product) {
+  res.send(product)
+ })
+})

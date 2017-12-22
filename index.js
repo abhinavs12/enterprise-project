@@ -413,7 +413,14 @@ server.get('/products/color/:color', function (req, res, next) {
 
 // Get all product using filter memory
 server.get('/products/memory/:memory', function (req, res, next) {
-  productsSave.find({ color: req.params.memorys }, function (error, product) {
+  productsSave.find({ memory: req.params.memory }, function (error, product) {
+  res.send(product)
+ })
+})
+
+
+server.get('/products/brand/:brand', function (req, res, next) {
+  productsSave.find({ brand: req.params.brand}, function (error, product) {
   res.send(product)
  })
 })

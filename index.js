@@ -165,7 +165,7 @@ server.post('/orders', function (req, res, next) {
   }
 
   // Create the order using the persistence engine
-  orderSave.create( newOrder, function (error, order) {
+  orderSave.create( newOrders, function (error, order) {
 
     // If there are any errors, pass them to next in the correct format
     if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))

@@ -113,23 +113,7 @@ server.get('/products', function (req, res, next) {
   })
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-server.get('/orders/username/:username', function (req, res, next) {
-  
-  // Find a single product by their id within save
-  orderSave.find({ _userName: req.params.username }, function (error, order) {
 
-    // If there are any errors, pass them to next in the correct format
-    if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
-
-    if (order) {
-      // Send the product if no issues
-      res.send(order)
-    } else {
-      // Send 404 header if the product doesn't exist
-      res.send(404)
-    }
-  })
-})
 
 
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -501,6 +485,19 @@ server.get('/products/name/:name', function (req, res, next) {
  })
 })
 
+
+
+server.get('/orders/username/:username', function (req, res, next) {
+  
+  // Find a single product by their id within save
+  orderSave.find({ _userName: req.params.username }, function (error, order) {
+
+    // If there are any errors, pass them to next in the correct format
+ res.send(order)   
+
+        
+  })
+})
 
 server.get('/orders', function (req, res, next) {
   

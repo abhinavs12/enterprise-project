@@ -4,17 +4,20 @@
   "description": "Creating a Mobile Online Store where users can view and buy the product and admin can add, delete or modify products",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "./node_modules/.bin/jasmine-node spec"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/abhinavs12/enterprise-project.git"
   },
   "dependencies": {
+    "express": "^4.16.2",
+    "jasmine-node": "^1.14.5",
+    "request": "^2.83.0",
     "restify": "4.1.1",
-"save": "2.3.0"
-
-},
+    "save": "2.3.0"
+  },
   "keywords": [
     "mobile",
     "store",

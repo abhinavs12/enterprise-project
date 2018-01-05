@@ -9,6 +9,7 @@ var restify = require('restify')
   , productsSave = require('save')('products')
   , productAcessoriesSave = require('save')('product_accessories')
   , productTariffsSave = require('save')('product_tariffs')
+  , orderSave = require('save')('orders')
 
   // Create the restify server
   , server = restify.createServer({ name: SERVER_NAME})
@@ -65,6 +66,7 @@ server.get('/products', function (req, res, next) {
     })
   })
   
+  
   // Create a new product
   server.post('/products', function (req, res, next) {
   
@@ -72,6 +74,10 @@ server.get('/products', function (req, res, next) {
     if (req.params.name === undefined ) {
       // If there are any errors, pass them to next in the correct format
       return next(new restify.InvalidArgumentError('Please enter name of phone.'))
+    }
+    if (req.params.userName === undefined ) {
+      // If there are any errors, pass them to next in the correct format
+      return next(new restify.InvalidArgumentError('Please enter User Names.'))
     }
     if (req.params.brand === undefined ) {
       // If there are any errors, pass them to next in the correct format
@@ -90,6 +96,7 @@ server.get('/products', function (req, res, next) {
       return next(new restify.InvalidArgumentError('Please enter screen size of the phone'))
     }
     var newProduct = {
+      userName: req.params.userName,
       name: req.params.name, 
       brand: req.params.brand,
       memory: req.params.memory,
@@ -107,7 +114,67 @@ server.get('/products', function (req, res, next) {
       res.send(201, product)
     })
   })
+
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+server.get('/orders/:userName', function (req, res, next) {
   
+  // Find a single product by their id within save
+  orderSave.find({ _userName: req.params.userName }, function (error, order) {
+
+    // If there are any errors, pass them to next in the correct format
+    if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+
+    if (order) {
+      // Send the product if no issues
+      res.send(order)
+    } else {
+      // Send 404 header if the product doesn't exist
+      res.send(404)
+    }
+  })
+})
+
+
+// +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+server.post('/orders', function (req, res, next) {
+  
+  // Make sure name is defined
+  if (req.params.totalCost === undefined ) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('Please enter Total Cost'))
+  }
+  if (req.params.quantity === undefined ) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('Please enter Quantity'))
+  }
+  if (req.params.nameOfTariff === undefined ) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('Please enter Name of Tariff'))
+  }
+  if (req.params.nameOfPhone === undefined ) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('Please enter Name of Phone'))
+  }
+  
+  var newOrders = {
+    totalCost: req.params.totalCost, 
+    quantity: req.params.quantity,
+    nameOfTariff: req.params.nameOfTariff,
+    nameOfAccessory: req.params.nameOfAccessory,
+    nameOfPhone: req.params.nameOfPhone
+  }
+
+  // Create the order using the persistence engine
+  orderSave.create( newOrder, function (error, order) {
+
+    // If there are any errors, pass them to next in the correct format
+    if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+
+    // Send the product if no issues
+    res.send(201, order)
+  })
+})
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // Update a product by their id
   server.put('/products/:id', function (req, res, next) {
   

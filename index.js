@@ -75,10 +75,7 @@ server.get('/products', function (req, res, next) {
       // If there are any errors, pass them to next in the correct format
       return next(new restify.InvalidArgumentError('Please enter name of phone.'))
     }
-    if (req.params.userName === undefined ) {
-      // If there are any errors, pass them to next in the correct format
-      return next(new restify.InvalidArgumentError('Please enter User Names.'))
-    }
+    
     if (req.params.brand === undefined ) {
       // If there are any errors, pass them to next in the correct format
       return next(new restify.InvalidArgumentError('Please enter brand of phone.'))
@@ -96,7 +93,7 @@ server.get('/products', function (req, res, next) {
       return next(new restify.InvalidArgumentError('Please enter screen size of the phone'))
     }
     var newProduct = {
-      userName: req.params.userName,
+      
       name: req.params.name, 
       brand: req.params.brand,
       memory: req.params.memory,
@@ -143,6 +140,10 @@ server.post('/orders', function (req, res, next) {
     // If there are any errors, pass them to next in the correct format
     return next(new restify.InvalidArgumentError('Please enter Total Cost'))
   }
+  if (req.params.userName === undefined ) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('Please enter User Names.'))
+  }
   if (req.params.quantity === undefined ) {
     // If there are any errors, pass them to next in the correct format
     return next(new restify.InvalidArgumentError('Please enter Quantity'))
@@ -157,6 +158,7 @@ server.post('/orders', function (req, res, next) {
   }
   
   var newOrders = {
+    userName: req.params.userName,
     totalCost: req.params.totalCost, 
     quantity: req.params.quantity,
     nameOfTariff: req.params.nameOfTariff,

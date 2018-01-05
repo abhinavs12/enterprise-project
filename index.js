@@ -113,10 +113,10 @@ server.get('/products', function (req, res, next) {
   })
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-server.get('/orders/:userName', function (req, res, next) {
+server.get('/orders/username/:username', function (req, res, next) {
   
   // Find a single product by their id within save
-  orderSave.find({ _userName: req.params.userName }, function (error, order) {
+  orderSave.find({ _userName: req.params.username }, function (error, order) {
 
     // If there are any errors, pass them to next in the correct format
     if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
@@ -499,4 +499,15 @@ server.get('/products/name/:name', function (req, res, next) {
   productsSave.find({ name: req.params.name}, function (error, product) {
   res.send(product)
  })
+})
+
+
+server.get('/orders', function (req, res, next) {
+  
+  // Find every entity within the given collection
+  orderSave.find({}, function (error, orders) {
+
+    // Return all of the products in the system
+    res.send(orders)
+  })
 })

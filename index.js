@@ -10,6 +10,7 @@ var restify = require('restify')
   , productAcessoriesSave = require('save')('product_accessories')
   , productTariffsSave = require('save')('product_tariffs')
   , orderSave = require('save')('orders')
+  , userSave = require('save')('users')
 
   // Create the restify server
   , server = restify.createServer({ name: SERVER_NAME})
@@ -516,5 +517,60 @@ server.get('/orders', function (req, res, next) {
 
     // Return all of the products in the system
     res.send(orders)
+  })
+})
+
+
+// Create a new product
+server.post('/user', function (req, res, next) {
+  
+  // Make sure name is defined
+  if (req.params.email === undefined ) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('Please enter email.'))
+  }
+  
+  if (req.params.password === undefined ) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('Please enter password.'))
+  }
+  
+  var newUser = {
+    
+    email: req.params.email, 
+    password: req.params.password
+  }
+
+  // Create the product using the persistence engine
+  userSave.create( newUser, function (error, user) {
+
+    // If there are any errors, pass them to next in the correct format
+    if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+
+    // Send the product if no issues
+    res.send(201, user)
+  })
+})
+
+
+server.get('/user/:user', function (req, res, next) {
+  
+  // Find a single product by their id within save
+  userSave.find({ email: req.params.user }, function (error, user) {
+
+    // If there are any errors, pass them to next in the correct format
+ res.send(user)   
+
+        
+  })
+})
+
+server.get('/user', function (req, res, next) {
+  
+  // Find every entity within the given collection
+  userSave.find({}, function (error, user) {
+
+    // Return all of the products in the system
+    res.send(user)
   })
 })

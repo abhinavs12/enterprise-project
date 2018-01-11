@@ -120,9 +120,17 @@ server.get('/products', function (req, res, next) {
 server.post('/orders', function (req, res, next) {
   
   // Make sure name is defined
-  if (req.params.totalCost === undefined ) {
+  if (req.params.upfrontCost === undefined ) {
     // If there are any errors, pass them to next in the correct format
-    return next(new restify.InvalidArgumentError('Please enter Total Cost'))
+    return next(new restify.InvalidArgumentError('Please enter Upfront Cost'))
+  }
+  if (req.params.monthlyCost === undefined ) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('Please enter Monthly Cost'))
+  }
+  if (req.params.status === undefined ) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('Please enter Status'))
   }
   if (req.params.userName === undefined ) {
     // If there are any errors, pass them to next in the correct format
@@ -143,7 +151,9 @@ server.post('/orders', function (req, res, next) {
   
   var newOrders = {
     userName: req.params.userName,
-    totalCost: req.params.totalCost, 
+    upfrontCost: req.params.upfrontCost, 
+    monthlyCost: req.params.monthlyCost, 
+    status: req.params.status, 
     quantity: req.params.quantity,
     nameOfTariff: req.params.nameOfTariff,
     nameOfAccessory: req.params.nameOfAccessory,
